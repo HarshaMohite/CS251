@@ -1,0 +1,13 @@
+0
+1 SoccerTeam{name='everton', Matches Played=1, Goals Scored=1, Goals Conceded=1, Points=1, posInQueue=10}
+2
+3
+4 SoccerTeam{name='burnley', Matches Played=0, Goals Scored=0, Goals Conceded=0, Points=0, posInQueue=-1}  SoccerTeam{name='chelsea', Matches Played=3, Goals Scored=0, Goals Conceded=0, Points=0, posInQueue=-1}  SoccerTeam{name='norwich', Matches Played=0, Goals Scored=0, Goals Conceded=0, Points=1, posInQueue=-1}  SoccerTeam{name='leicester', Matches Played=1, Goals Scored=2, Goals Conceded=3, Points=3, posInQueue=1}
+5
+6 SoccerTeam{name='liverpool', Matches Played=0, Goals Scored=0, Goals Conceded=0, Points=3, posInQueue=-1}
+7 SoccerTeam{name='arsenal', Matches Played=2, Goals Scored=0, Goals Conceded=0, Points=1, posInQueue=-1}
+8 SoccerTeam{name='sothmpton', Matches Played=2, Goals Scored=0, Goals Conceded=0, Points=2, posInQueue=-1}  SoccerTeam{name='watford', Matches Played=0, Goals Scored=3, Goals Conceded=0, Points=0, posInQueue=-1}
+9 SoccerTeam{name='manunited', Matches Played=0, Goals Scored=0, Goals Conceded=0, Points=0, posInQueue=-1}
+10 SoccerTeam{name='mancity', Matches Played=0, Goals Scored=0, Goals Conceded=0, Points=0, posInQueue=1}  SoccerTeam{name='spurs', Matches Played=0, Goals Scored=0, Goals Conceded=0, Points=1, posInQueue=-1}  SoccerTeam{name='westham', Matches Played=1, Goals Scored=2, Goals Conceded=1, Points=3, posInQueue=1}
+11
+12

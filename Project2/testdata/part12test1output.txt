@@ -1,0 +1,10 @@
+((l%M)+(((i%M)*E)%M)+(((v%M)*E*E)%M)+(((e%M)*E*E*E)%M)+(((r%M)*E*E*E*E)%M)+(((p%M)*E*E*E*E*E)%M)+(((o%M)*E*E*E*E*E*E)%M)+(((o%M)*E*E*E*E*E*E*E)%M)+(((l%M)*E*E*E*E*E*E*E*E)%M))%M,9,9
+((b%M)+(((u%M)*E)%M)+(((r%M)*E*E)%M)+(((n%M)*E*E*E)%M)+(((l%M)*E*E*E*E)%M)+(((e%M)*E*E*E*E*E)%M)+(((y%M)*E*E*E*E*E*E)%M))%M,3,3
+((c%M)+(((h%M)*E)%M)+(((e%M)*E*E)%M)+(((l%M)*E*E*E)%M)+(((s%M)*E*E*E*E)%M)+(((e%M)*E*E*E*E*E)%M)+(((a%M)*E*E*E*E*E*E)%M))%M,0,0
+((m%M)+(((a%M)*E)%M)+(((n%M)*E*E)%M)+(((u%M)*E*E*E)%M)+(((n%M)*E*E*E*E)%M)+(((i%M)*E*E*E*E*E)%M)+(((t%M)*E*E*E*E*E*E)%M)+(((e%M)*E*E*E*E*E*E*E)%M)+(((d%M)*E*E*E*E*E*E*E*E)%M))%M,4,4
+((s%M)+(((p%M)*E)%M)+(((u%M)*E*E)%M)+(((r%M)*E*E*E)%M)+(((s%M)*E*E*E*E)%M))%M,0,0
+((m%M)+(((a%M)*E)%M)+(((n%M)*E*E)%M)+(((c%M)*E*E*E)%M)+(((i%M)*E*E*E*E)%M)+(((t%M)*E*E*E*E*E)%M)+(((y%M)*E*E*E*E*E*E)%M))%M,1,1
+((s%M)+(((o%M)*E)%M)+(((t%M)*E*E)%M)+(((h%M)*E*E*E)%M)+(((m%M)*E*E*E*E)%M)+(((p%M)*E*E*E*E*E)%M)+(((t%M)*E*E*E*E*E*E)%M)+(((o%M)*E*E*E*E*E*E*E)%M)+(((n%M)*E*E*E*E*E*E*E*E)%M))%M,7,7
+((w%M)+(((a%M)*E)%M)+(((t%M)*E*E)%M)+(((f%M)*E*E*E)%M)+(((o%M)*E*E*E*E)%M)+(((r%M)*E*E*E*E*E)%M)+(((d%M)*E*E*E*E*E*E)%M))%M,1,1
+((n%M)+(((o%M)*E)%M)+(((r%M)*E*E)%M)+(((w%M)*E*E*E)%M)+(((i%M)*E*E*E*E)%M)+(((c%M)*E*E*E*E*E)%M)+(((h%M)*E*E*E*E*E*E)%M))%M,5,5
+((a%M)+(((r%M)*E)%M)+(((s%M)*E*E)%M)+(((e%M)*E*E*E)%M)+(((n%M)*E*E*E*E)%M)+(((a%M)*E*E*E*E*E)%M)+(((l%M)*E*E*E*E*E*E)%M))%M,8,8

@@ -1,0 +1,10 @@
+arsenal,0,0,0,0,-1
+burnley,0,0,0,0,-1
+chelsea,0,0,0,0,-1
+liverpool,0,0,0,0,-1
+mancity,0,0,0,0,-1
+manunited,0,0,0,0,-1
+norwich,0,0,0,0,-1
+sothmpton,0,0,0,0,-1
+spurs,0,0,0,0,-1
+watford,0,0,0,0,-1

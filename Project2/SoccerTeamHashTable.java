@@ -106,11 +106,12 @@ public class SoccerTeamHashTable {
         /*if (this.table[hash].size() == 0) {
             this.table[hash].add(c);
         }*/
-        if (this.table[hash] == null) {
+        if (this.table[hash] == null) { // if nothing at this hash, add
             this.table[hash] = new ArrayList<SoccerTeam>();
             this.table[hash].add(c);
+            this.numTeams++;
         }
-        else {
+        else { // if something there, chain:
             boolean teamAdded = false;
             for (SoccerTeam existingTeam : this.table[hash]) { // see if exists or needs replacing
                 if (c.equals(existingTeam)) {
@@ -118,7 +119,10 @@ public class SoccerTeamHashTable {
                     break;
                 }
                 if (existingTeam.getName().compareTo(c.getName()) == 0) {
-                    existingTeam = c;
+                    //existingTeam = c;
+                    //this.table[hash].add(c);
+                    this.table[hash].add(table[hash].indexOf(existingTeam), c);
+                    this.table[hash].remove(existingTeam);
                     teamAdded = true;
                     break;
                 }
@@ -128,6 +132,7 @@ public class SoccerTeamHashTable {
                 this.numTeams++;
             }
         }
+        //System.out.println(c.getMatchesPlayed());
         return;
     }
 

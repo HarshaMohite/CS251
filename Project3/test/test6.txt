@@ -1,0 +1,30 @@
+add 40
+print
+add 10
+print
+remove 40
+print
+add 8
+print
+add 12
+print
+add 7
+print
+add 9
+print
+add 11
+print
+add 14
+print
+add 16
+print
+add 18
+print
+remove 14
+print
+remove 16
+print
+remove 12
+print
+remove 18
+print

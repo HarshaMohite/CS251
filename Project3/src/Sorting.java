@@ -135,19 +135,20 @@ public class Sorting<Item extends Comparable<Item>> {
      */
     public ArrayList<Item> mergeSort(ArrayList<Item> list) {
         // TODO: part 1
-
-        return list;
+        ArrayList<Item> newList = mergeSort2(list, 0, list.size() - 1);
+        return newList;
     }
 
     public ArrayList<Item> mergeSort2(ArrayList<Item> list, int l, int r) {
+        ArrayList<Item> newList = list;
         if (l < r) {
             int m = (l + r) / 2;
-            mergeSort2(list, l, m);
-            mergeSort2(list, m + 1, r);
-            merge(list,l, m, r);
+            newList = mergeSort2(newList, l, m);
+            newList = mergeSort2(newList, m + 1, r);
+            newList = merge(newList,l, m, r);
         }
 
-        return list;
+        return newList;
     }
 
     public ArrayList<Item> merge(ArrayList<Item> list, int l, int m, int r) {
@@ -163,12 +164,11 @@ public class Sorting<Item extends Comparable<Item>> {
         for (int j = 0; j < n2 - 1; j++) {
             R.set(j, list.get(m + j + 1));
         }
-
         int i = 0;
         int j = 0;
         for (int k = l; k < r - 1; k++) {
             if (lessThan(L.get(i), R.get(j)) || equal(L.get(i), R.get(j))) {
-                list.set(i, L.get(i));
+                list.set(k, L.get(i));
                 i++;
             }
             else {

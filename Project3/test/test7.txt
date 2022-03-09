@@ -1,0 +1,200 @@
+add 52
+print
+add 133
+print
+add 45
+print
+add 185
+print
+add 124
+print
+add 13
+print
+add 193
+print
+add 185
+print
+add 102
+print
+add 169
+print
+remove 193
+print
+add 97
+print
+add 161
+print
+add 27
+print
+add 189
+print
+add 198
+print
+add 102
+print
+add 132
+print
+remove 185
+print
+remove 189
+print
+remove 124
+print
+add 85
+print
+add 8
+print
+add 74
+print
+add 192
+print
+add 92
+print
+add 200
+print
+add 193
+print
+add 175
+print
+add 36
+print
+add 41
+print
+add 27
+print
+remove 36
+print
+add 70
+print
+add 183
+print
+add 143
+print
+add 194
+print
+add 84
+print
+add 43
+print
+add 41
+print
+add 74
+print
+remove 27
+print
+remove 193
+print
+add 55
+print
+remove 85
+print
+add 161
+print
+remove 192
+print
+add 134
+print
+add 167
+print
+remove 43
+print
+add 99
+print
+add 66
+print
+remove 97
+print
+add 106
+print
+remove 8
+print
+add 140
+print
+remove 66
+print
+remove 132
+print
+add 126
+print
+add 186
+print
+remove 52
+print
+add 148
+print
+add 32
+print
+add 73
+print
+add 155
+print
+add 164
+print
+add 122
+print
+add 183
+print
+add 71
+print
+remove 169
+print
+add 37
+print
+remove 198
+print
+add 9
+print
+remove 92
+print
+add 96
+print
+add 163
+print
+add 146
+print
+remove 70
+print
+add 128
+print
+remove 194
+print
+remove 9
+print
+add 44
+print
+remove 146
+print
+remove 55
+print
+add 77
+print
+add 40
+print
+remove 45
+print
+remove 128
+print
+add 55
+print
+remove 40
+print
+remove 73
+print
+add 146
+print
+add 60
+print
+add 134
+print
+remove 122
+print
+remove 200
+print
+add 170
+print
+add 15
+print
+add 14
+print
+add 9
+print

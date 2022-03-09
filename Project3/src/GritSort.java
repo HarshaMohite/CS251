@@ -45,8 +45,24 @@ public class GritSort<Item extends Comparable<Item>> {
             TODO: STEP 2: implement and call mergeChunk to merge the chunks in a bucket. do this for every bucket
             TODO: STEP 3: merge the buckets and return the elements of the merged buckets as a list
          */
-
-        return list;
+        ArrayList<ArrayList<Item>> chunkList = makeChunks(list); // divide list into sorted chunks
+        HashMap<Integer, ArrayList<ArrayList<Item>>> bucketMap = makeBuckets(chunkList); // make buckets
+        for (int key : bucketMap.keySet()) { // merge chunks in each bucket
+            ArrayList<ArrayList<Item>> chunksInBucket = new ArrayList<ArrayList<Item>>();
+            for (ArrayList<Item> chunk : bucketMap.get(key)) {
+                chunksInBucket.add(chunk);
+            }
+            ArrayList<Item> mergedBucket = mergeChunk(chunksInBucket);
+            bucketMap.get(key).clear();
+            bucketMap.get(key).add(mergedBucket);
+        }
+        ArrayList<ArrayList<Item>> allBuckets = new ArrayList<ArrayList<Item>>(); // combined all buckets
+        for (int key : bucketMap.keySet()) { // add each bucket to allBuckets
+            allBuckets.add(bucketMap.get(key).get(0));
+        }
+        ArrayList<Item> finalList = new ArrayList<Item>();
+        finalList = mergeChunk(allBuckets);
+        return finalList;
     }
 
     /**
@@ -70,21 +86,25 @@ public class GritSort<Item extends Comparable<Item>> {
      */
     public ArrayList<ArrayList<Item>> makeChunks(ArrayList<Item> list) {
         // TODO: part 1
-        Sorting Sort = new Sorting();
+        Sorting sort = new Sorting();
         ArrayList<ArrayList<Item>> chunks = new ArrayList<ArrayList<Item>>();
+        // start working on chunk 1, get first list item
         int chunkNum = 0;
         Item previous = list.get(0);
-        chunks.add(new ArrayList<Item>());
-        for (int i = 0; i < list.size(); i++) {
-            if (Sort.lessThan(list.get(i), previous)) {
+        chunks.add(0, new ArrayList<Item>()); // new arraylist instance
+        if (list.size() >= 1) {
+            chunks.get(0).add(list.get(0)); // add first list element
+        }
+        for (int i = 1; i < list.size(); i++) {
+            // if next list item is less than prev., start new chunk
+            if (sort.lessThan(list.get(i), previous)) {
                 chunkNum++;
                 chunks.add(chunkNum, new ArrayList<Item>());
             }
-            chunks.get(chunkNum).add(list.get(i));
-            previous = list.get(i);
+            chunks.get(chunkNum).add(list.get(i)); // add to chunk
+            previous = list.get(i); // update prev.
         }
-
-        return null;
+        return chunks;
     }
 
 
@@ -118,6 +138,16 @@ public class GritSort<Item extends Comparable<Item>> {
     	HashMap<Integer, ArrayList<ArrayList<Item>>> buckets = new HashMap<Integer, ArrayList<ArrayList<Item>>>();
     	// make buckets is a helper function. 
     	// CHANGE THIS ACCORDING TO YOUR IMPLEMENTATION
+
+        // for every arraylist chunk
+        for (ArrayList<Item> chunk : chunks) {
+            int hashIndex = chunk.size(); // index to submit to hashmap
+            // if there is no ArrayList of ArrayLists at hashIndex, create one
+            if (buckets.get(hashIndex) == null) {
+                buckets.put(hashIndex, new ArrayList<ArrayList<Item>>());
+            }
+            buckets.get(hashIndex).add(chunk); // add current chunk to hashmap bucket
+        }
     	
 	   	return buckets;
 	}
@@ -145,8 +175,13 @@ public class GritSort<Item extends Comparable<Item>> {
      */
     public ArrayList<Item> mergeChunk(ArrayList<ArrayList<Item>> bucket) {
         // TODO: part 1
-
-        return null;
+        ArrayList<Item> sortedList = new ArrayList<Item>();
+        Sorting sort = new Sorting();
+        for (ArrayList<Item> chunk : bucket) {
+            sortedList.addAll(chunk);
+        }
+        sortedList = sort.mergeSort(sortedList);
+        return sortedList;
     }
 
 

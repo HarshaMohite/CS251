@@ -70,7 +70,19 @@ public class GritSort<Item extends Comparable<Item>> {
      */
     public ArrayList<ArrayList<Item>> makeChunks(ArrayList<Item> list) {
         // TODO: part 1
-
+        Sorting Sort = new Sorting();
+        ArrayList<ArrayList<Item>> chunks = new ArrayList<ArrayList<Item>>();
+        int chunkNum = 0;
+        Item previous = list.get(0);
+        chunks.add(new ArrayList<Item>());
+        for (int i = 0; i < list.size(); i++) {
+            if (Sort.lessThan(list.get(i), previous)) {
+                chunkNum++;
+                chunks.add(chunkNum, new ArrayList<Item>());
+            }
+            chunks.get(chunkNum).add(list.get(i));
+            previous = list.get(i);
+        }
 
         return null;
     }

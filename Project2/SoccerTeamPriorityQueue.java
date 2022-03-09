@@ -95,11 +95,11 @@ public class SoccerTeamPriorityQueue {
 
     public int insert(SoccerTeam c) {
         //TODO: implement insert
-        this.teamList[numTeams] = c;
-        c.setPosInQueue(numTeams);
+        this.teamList[numTeams] = new SoccerTeam(c);
+        teamList[numTeams].setPosInQueue(numTeams);
         this.numTeams++;
         int newIndex = heapifyUp(numTeams - 1);
-        this.teamTable.put(teamList[newIndex]);
+        this.teamTable.put(new SoccerTeam(teamList[newIndex]));
         return newIndex;
     }
 
@@ -118,11 +118,13 @@ public class SoccerTeamPriorityQueue {
             if (this.teamList[index].compareTo(this.teamList[parentIndex]) == 1) {
                 // make swap
                 SoccerTeam temp = this.teamList[parentIndex];
-                this.teamList[parentIndex] = this.teamList[index];
-                this.teamList[index] = temp;
+                this.teamList[parentIndex] = new SoccerTeam(this.teamList[index]);
+                this.teamList[index] = new SoccerTeam(temp);
                 // move index
                 this.teamList[index].setPosInQueue(index);
+                teamTable.put(new SoccerTeam(teamList[index]));
                 this.teamList[parentIndex].setPosInQueue(parentIndex);
+                teamTable.put(new SoccerTeam(teamList[parentIndex]));
                 index = parentIndex;
             }
             else {
@@ -166,7 +168,7 @@ public class SoccerTeamPriorityQueue {
 
         // if
         if (leftSwap && rightSwap) {
-            if (teamList[leftChildIndex].compareTo(teamList[rightChildIndex]) == -1) {
+            if (teamList[leftChildIndex].compareTo(teamList[rightChildIndex]) == 1) {
                 rightSwap = false;
             }
             else {
@@ -174,21 +176,24 @@ public class SoccerTeamPriorityQueue {
             }
         }
         if (leftSwap) {
-            SoccerTeam temp = teamList[leftChildIndex];
-            teamList[leftChildIndex] = teamList[index];
-            teamList[index] = temp;
+            SoccerTeam temp = new SoccerTeam(teamList[leftChildIndex]);
+            teamList[leftChildIndex] = new SoccerTeam(teamList[index]);
+            teamList[index] = new SoccerTeam(temp);
             teamList[leftChildIndex].setPosInQueue(leftChildIndex);
-            teamList[leftChildIndex].setPosInQueue(leftChildIndex);
+            teamTable.put(new SoccerTeam(teamList[leftChildIndex]));
             teamList[index].setPosInQueue(index);
+            teamTable.put(new SoccerTeam(teamList[index]));
             return heapifyDown(leftChildIndex);
         }
         else if (rightSwap) {
-            SoccerTeam temp = teamList[rightChildIndex];
-            teamList[rightChildIndex] = teamList[index];
-            teamList[index] = temp;
+            SoccerTeam temp = new SoccerTeam(teamList[rightChildIndex]);
+            teamList[rightChildIndex] = new SoccerTeam(teamList[index]);
+            teamList[index] = new SoccerTeam(temp);
+            // Update pos in queue
             teamList[rightChildIndex].setPosInQueue(rightChildIndex);
-            teamList[rightChildIndex].setPosInQueue(rightChildIndex);
+            teamTable.put(new SoccerTeam(teamList[rightChildIndex]));
             teamList[index].setPosInQueue(index);
+            teamTable.put(new SoccerTeam(teamList[index]));
             return heapifyDown(rightChildIndex);
         }
 
@@ -203,14 +208,14 @@ public class SoccerTeamPriorityQueue {
     public SoccerTeam delMax() {
         //TODO implement delMax
         SoccerTeam topElement = teamList[0];
+        teamTable.remove(topElement.getName());
         int finalElementIndex = numTeams - 1;
-        teamList[0] = teamList[finalElementIndex];
+        teamList[0] = new SoccerTeam(teamList[finalElementIndex]);
         teamList[0].setPosInQueue(0);
         teamList[finalElementIndex] = null;
         numTeams--;
         int newIndex = heapifyDown(0);
-        teamTable.put(teamList[newIndex]);
-        teamTable.remove(topElement.getName());
+        teamTable.put(new SoccerTeam(teamList[newIndex]));
         return topElement;
     }
 
@@ -245,11 +250,16 @@ public class SoccerTeamPriorityQueue {
      */
     public int update(int index, SoccerTeam oldTeamNewValue) {
         //TODO implement update
-        oldTeamNewValue.setPosInQueue(index);
-        teamList[index] = oldTeamNewValue;
+        //System.out.println(oldTeamNewValue.getMatchesPlayed());
+        SoccerTeam updatedTeam = new SoccerTeam(oldTeamNewValue);
+        updatedTeam.setPosInQueue(index);
+        teamList[index] = updatedTeam;
+        teamTable.put(teamList[index]);
         int newIndex = heapifyUp(index);
-        newIndex = heapifyDown(index);
-        teamTable.put(teamList[newIndex]);
+        newIndex = heapifyDown(newIndex);
+        SoccerTeam updateS = new SoccerTeam(teamList[newIndex]);
+        //System.out.println(updateS.getMatchesPlayed());
+        teamTable.put(updateS);
         return newIndex;
     }
 

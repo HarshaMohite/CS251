@@ -89,7 +89,15 @@ public class Scapegoat {
     private Node scapegoatNode(Node node) {
         // TODO:
         // -----------------------
+
         if (size(node) <= threshold * size(node.parent)) {
+            return scapegoatNode(node.parent);
+        }
+        else {
+            return node;
+        }
+
+        /*if (size(node) <= threshold * size(node.parent)) {
             return scapegoatNode(node.parent);
         }
         else if (size(node) > threshold * size(node.parent)) {
@@ -97,7 +105,7 @@ public class Scapegoat {
         }
         else {
             return node;
-        }
+        }*/
         // -----------------------
     }
 
@@ -114,12 +122,84 @@ public class Scapegoat {
         // rebuild the subtree whose root is node
         // -----------------------
 
+        // Get list of all nodes
+        List<Node> nodeList = inorder(node);
 
+        /*
+        // Sort list
+        ArrayList<Node> sortList = new ArrayList<Node>();
+        for (Node n : nodeList) {
+            sortList.add(n);
+        }
+        Sorting sort = new Sorting();
+        sortList = sort.insertionSort(sortList);
+        */
+        Node nodeParentRef = node.parent; // Save the parent
+        Node baseNode = rebuildMain(nodeList, 0, nodeList.size() - 1, node.parent);
+        baseNode.parent = nodeParentRef;
+        if (nodeParentRef != null) { // Connect rebuilt tree to parent
+            if (baseNode.data.compareTo(nodeParentRef.data) <= 0) {
+                nodeParentRef.left = baseNode;
+            }
+            else {
+                nodeParentRef.right = baseNode;
+            }
+        }
 
-        return node;
+        return baseNode;
         // -----------------------
     }
 
+    public Node rebuildMain(List<Node> nodeList, int startIndex, int endIndex, Node parentNode) {
+
+        if (startIndex > endIndex) { // If no more indices here...
+            return null;
+        }
+
+        // Find middle index
+        int middleIndex = (startIndex + endIndex) / 2;
+        if (((startIndex + endIndex) % 2) == 0) {
+            middleIndex = middleIndex;
+        }
+        else {
+            middleIndex++;
+        }
+        Node midNode = nodeList.get(middleIndex);
+
+        // set parent, left, right for given node
+        midNode.parent = parentNode;
+        midNode.left  = rebuildMain(nodeList, startIndex, middleIndex - 1, midNode);
+        midNode.right = rebuildMain(nodeList, middleIndex + 1, endIndex, midNode);
+
+        // will eventually return the root of this subtree
+        return midNode;
+    }
+
+    // WARNING: DO NOT USE
+    /*
+    public Node rebuildMain(ArrayList<Node> nodeList, int startIndex, int endIndex, Node parentNode) {
+        if (endIndex < startIndex) {
+            return null;
+        }
+
+        int middleIndex = (startIndex + endIndex) / 2;
+
+        Node midNode = nodeList.get(middleIndex);
+
+        midNode.parent = parentNode;
+        midNode.left  = rebuildMain(nodeList, startIndex, middleIndex - 1, midNode);
+        midNode.right = rebuildMain(nodeList, middleIndex + 1, endIndex, midNode);
+
+        return midNode;
+    }
+    */
+
+    /*
+    public Node rebuildHelper(Node root) {
+
+        return null;
+    }
+    */
 
     /**
      *
@@ -129,17 +209,77 @@ public class Scapegoat {
      *
      */
     public void add(T data) {
-        if (root == null) {
+        if (root == null) { // if root is null...
             root = new Node(data, null, null, null);
             NodeCount ++;
         } else {
             // TODO:
             // -----------------------
-            
+            int heightBalance = (int)Math.floor(Math.log(size(root)) / Math.log(1/threshold)); // is this cast and function proper?
+
+            Node newNode = new Node(data, null, null, null);
+            int insertDepth = add_recursive(root, newNode, null, 0); // should the depth start at 0?
+            if (insertDepth == -1) { // -1 if data already exists
+                return;
+            }
+
+
             // -----------------------
         }
     }
 
+    public int add_recursive(Node root, Node newNode, Node parent, int depth) {
+        if (root == null) { // base case, when reaching a valid root
+            if (parent == null) { // is the root null?
+                // case: root
+                root = newNode; // set root to new node
+                return depth; // probably just return
+            }
+            else {
+                //root = newNode; // see if this is setting the right ref
+                newNode.parent = parent; // set parent; parent's left/right set in comparison checks
+            }
+
+            // todo: do scapegoat stuff here
+            NodeCount++;
+            // find height balance
+            int heightBalance = (int)Math.floor(Math.log(size(root)) / Math.log(1/threshold)); // is this cast and function proper?
+            if (depth > heightBalance) {
+                // unbalanced
+                findScapegoat(newNode);
+            }
+            return depth;
+        }
+
+        // compare left/right
+        if (newNode.data.compareTo(root.data) == -1) {
+            if (root.left == null) {
+                root.left = newNode;
+                return add_recursive(null, newNode, root, depth + 1);
+            }
+            return add_recursive(root.left, newNode, root, depth + 1); // incrementing depth in recursive call
+        }
+        else if (newNode.data.compareTo(root.data) == 1) {
+            if (root.right == null) {
+                root.right = newNode;
+                return add_recursive(null, newNode, root, depth + 1);
+            }
+            return add_recursive(root.right, newNode, root, depth + 1);
+        }
+        else {
+            // case: same element
+            return -1;
+        }
+    }
+
+    public void findScapegoat(Node currentNode) {
+        Node foundNode = scapegoatNode(currentNode);
+        if (foundNode == null) {
+            return;
+        }
+        rebuild(foundNode);
+
+    }
 
     /**
      *

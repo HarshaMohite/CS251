@@ -89,8 +89,15 @@ public class Scapegoat {
     private Node scapegoatNode(Node node) {
         // TODO:
         // -----------------------
-
-        return node;
+        if (size(node) <= threshold * size(node.parent)) {
+            return scapegoatNode(node.parent);
+        }
+        else if (size(node) > threshold * size(node.parent)) {
+            return node;
+        }
+        else {
+            return node;
+        }
         // -----------------------
     }
 

@@ -139,44 +139,84 @@ public class Sorting<Item extends Comparable<Item>> {
         return newList;
     }
 
-    public ArrayList<Item> mergeSort2(ArrayList<Item> list, int l, int r) {
-        ArrayList<Item> newList = list;
+    public ArrayList<Item> mergeSort2(ArrayList<Item> A, int l, int r) {
+        ArrayList<Item> newList = A;
         if (l < r) {
             int m = (l + r) / 2;
-            newList = mergeSort2(newList, l, m);
-            newList = mergeSort2(newList, m + 1, r);
-            newList = merge(newList,l, m, r);
+            A = mergeSort2(A, l, m);
+            A = mergeSort2(A, m + 1, r);
+            A = merge(A, l, m, r);
         }
 
-        return newList;
+        return A;
     }
 
-    public ArrayList<Item> merge(ArrayList<Item> list, int l, int m, int r) {
+    public ArrayList<Item> merge(ArrayList<Item> A, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
+
         ArrayList<Item> L = new ArrayList<Item>(n1 + 1);
         ArrayList<Item> R = new ArrayList<Item>(n2 + 1);
 
-        for (int i = 0; i < n1 - 1; i++) {
-            L.set(i, list.get(l + i));
+        // get Items from A, put in L
+        for (int i = 0; i <= n1 - 1; i++) {
+            L.add(A.get(l + i));
+        }
+        // get Items from A, put in R
+        for (int j = 0; j <= n2 - 1; j++) {
+            R.add(A.get(m + j + 1));
         }
 
-        for (int j = 0; j < n2 - 1; j++) {
-            R.set(j, list.get(m + j + 1));
-        }
+        //L.add(n1, null);
+        //R.add(n2, null);
         int i = 0;
         int j = 0;
-        for (int k = l; k < r - 1; k++) {
-            if (lessThan(L.get(i), R.get(j)) || equal(L.get(i), R.get(j))) {
-                list.set(k, L.get(i));
+        int kPos = l;
+        for (int k = l; k <= r - 1; k++) {
+            /*if (i >= L.size() || j >= R.size()) {
+                break;
+            }*/
+
+            if (i < L.size() && j < R.size() && (lessThan(L.get(i), R.get(j)) || equal(L.get(i), R.get(j)))) {
+                A.set(k, L.get(i));
+                kPos++;
                 i++;
             }
             else {
-                list.set(k, R.get(j));
+                if (j >= R.size()){
+                    //kPos = k;
+                    break;
+                }
+                A.set(k, R.get(j));
+                kPos++;
                 j++;
             }
+            //kPos = k;
         }
-        return list;
+        //kPos++;
+        while (i < n1) {
+            A.set(kPos, L.get(i));
+            kPos++;
+            i++;
+        }
+        while (j < n2) {
+            A.set(kPos, R.get(j));
+            kPos++;
+            j++;
+        }
+        /*
+        while (i < L.size() && kPos <= r - l + 1) {
+            A.set(kPos, L.get(i));
+            kPos++;
+            i++;
+        }
+        while (j < R.size() && kPos <= r - l + 1) {
+            A.set(kPos, R.get(j));
+            kPos++;
+            j++;
+        }
+        */
+        return A;
     }
 
 
@@ -224,12 +264,16 @@ public class Sorting<Item extends Comparable<Item>> {
 
         Sorting<Integer> s = new Sorting<>();
         ArrayList<Integer> A = new ArrayList<Integer>();
-        Integer[] K = {4,4,3,1,3,9,8,2,5,6};
+        //Integer[] K = {4,4,3,1,3,9,8,2,5,6};
+        Integer[] K = {4, 6, 3, 5, 7, 1};
 
         for (Integer k : K) {
             A.add(k);
         }
 
+        s.print(A);
+
+        A = s.mergeSort(A);
         s.print(A);
 
     }

@@ -89,23 +89,23 @@ public class Scapegoat {
     private Node scapegoatNode(Node node) {
         // TODO:
         // -----------------------
-
+        /*
         if (size(node) <= threshold * size(node.parent)) {
             return scapegoatNode(node.parent);
         }
         else {
             return node;
         }
-
-        /*if (size(node) <= threshold * size(node.parent)) {
+        */
+        if ((double)size(node) <= threshold * (double)size(node.parent)) {
             return scapegoatNode(node.parent);
         }
         else if (size(node) > threshold * size(node.parent)) {
-            return node;
+            return node.parent; // todo: NOTE: Made this parent
         }
         else {
-            return node;
-        }*/
+            return node.parent;
+        }
         // -----------------------
     }
 
@@ -144,6 +144,8 @@ public class Scapegoat {
             else {
                 nodeParentRef.right = baseNode;
             }
+        } else {
+            this.root = baseNode;
         }
 
         return baseNode;
@@ -215,16 +217,22 @@ public class Scapegoat {
         } else {
             // TODO:
             // -----------------------
-            int heightBalance = (int)Math.floor(Math.log(size(root)) / Math.log(1/threshold)); // is this cast and function proper?
+            int heightBalance = (int)Math.floor(Math.log(size(root)) / Math.log(1/threshold)) + 1; // is this cast and function proper?
 
             Node newNode = new Node(data, null, null, null);
             int insertDepth = add_recursive(root, newNode, null, 0); // should the depth start at 0?
+
             if (insertDepth == -1) { // -1 if data already exists
                 return;
             }
 
 
+
             // -----------------------
+        }
+
+        if (NodeCount > MaxNodeCount) {
+            MaxNodeCount = NodeCount;
         }
     }
 
@@ -243,10 +251,10 @@ public class Scapegoat {
             // todo: do scapegoat stuff here
             NodeCount++;
             // find height balance
-            int heightBalance = (int)Math.floor(Math.log(size(root)) / Math.log(1/threshold)); // is this cast and function proper?
+            int heightBalance = (int)Math.floor(Math.log(size(this.root)) / Math.log(1/threshold)); // is this cast and function proper?
             if (depth > heightBalance) {
                 // unbalanced
-                findScapegoat(newNode);
+                findScapegoat(newNode.parent);
             }
             return depth;
         }
@@ -292,9 +300,73 @@ public class Scapegoat {
         // TODO
         // -----------------------
 
+        removeHelper(this.root, data);
+        NodeCount--;
+        if (NodeCount <= (threshold * MaxNodeCount)) {
+            rebuild(this.root);
+            this.MaxNodeCount = NodeCount;
+        }
+
+
         // -----------------------
 
     }
+
+    public Node removeHelper(Node root, T data) {
+        if (root == null) {
+            return null;
+        }
+
+        if (data.compareTo(root.data) == -1) {
+            root.left = removeHelper(root.left, data);
+        }
+        else if (data.compareTo(root.data) == 1) {
+            root.right = removeHelper(root.right, data);
+        }
+        else {
+            // case: Key is leaf
+            if ((root.left == null) && (root.right == null)) {
+                // set parent root to null
+                if (root.parent != null) {
+                    if (root.data.compareTo(root.parent.data) < 0) {
+                        root.parent.left = null;
+                    } else {
+                        root.parent.right = null;
+                    }
+                }
+                root = null;
+            } // Case 3: Key is node w/ 2 children
+            else if ((root.left != null) && (root.right != null)) {
+                Node successor = succNode(root); // should this be root.right?
+                root.data = successor.data;
+                root.right = removeHelper(root.right, successor.data);
+                //return null;
+            } // Case 2: key is in a node w/ one child
+            else {
+                Node child;
+                if (root.left != null) {
+                    child = root.left;
+                } else {
+                    child = root.right;
+                }
+                child.parent = root.parent;
+                if (root.parent != null) {
+                    // set parent left or right to child
+                    if (root.data.compareTo(root.parent.data) < 0) {
+                        root.parent.left = child;
+                    } else {
+                        root.parent.right = child;
+                    }
+                } else {
+                    this.root = child;
+                }
+                root = child;
+            }
+        }
+        return root;
+    }
+
+
 
 
     // preorder traversal

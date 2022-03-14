@@ -90,9 +90,16 @@ public class SampleScapegoatTest {
 			}
 			else if (string[0].equals("print")) {
 				String result = "preorder: " + tree.preorder(tree.root()) + "inorder: " + tree.inorder(tree.root());
+				System.out.println("-----");
+				System.out.println("Got:");
+				System.out.println(result);
 				if (! result.equals(outputs.get(cnt))) {
 					correct = 0;
+					System.out.println("ERROR!!!!!!");
 				}
+				System.out.println("Expected:");
+				System.out.println(outputs.get(cnt));
+				System.out.println("-----");
 				cnt += 1;
 			}
 		}

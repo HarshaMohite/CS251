@@ -16,7 +16,14 @@ public class BipartiteMatching {
     */
     public BipartiteMatching(int M, int N)
     {
-		
+		this.M = M;
+        this.N = N;
+        this.adj_list = new HashMap<Integer, ArrayList<Node>>();
+        this.match = new int[M + N];
+        for (int i = 0; i < match.length; i++) {
+            match[i] = -1;
+        }
+        this.used = new boolean[M + N];
     }
 
     /** TODO
@@ -29,8 +36,43 @@ public class BipartiteMatching {
      * @param node_list : all the nodes connected with node u
     **/
     public void insList(int u, int []node_list)
-    {		
-        
+    {
+        int uOffsetIndex = u + M;
+        initializeArrayList(uOffsetIndex);
+        for (int connectedNode : node_list) {
+            // Add into ArrayList at key u
+            Node nextNode = new Node(connectedNode);
+            if (!nodeListContains(adj_list.get(uOffsetIndex), connectedNode)) {
+                adj_list.get(uOffsetIndex).add(nextNode);
+            }
+
+            // For other link (since it's an undirected graph)
+            initializeArrayList(connectedNode);
+            Node originNode = new Node(uOffsetIndex); // Node for u
+            if (!nodeListContains(adj_list.get(connectedNode), uOffsetIndex)) {
+                adj_list.get(connectedNode).add(originNode);
+            }
+        }
+    }
+
+    /*
+    Initializes a new ArrayList if none is found at the current index.
+    Returns true if a new list was created, false otherwise.
+     */
+    public boolean initializeArrayList(int key) {
+        if (adj_list.get(key) == null) {
+            adj_list.put(key, new ArrayList<Node>());
+        }
+        return false;
+    }
+
+    public boolean nodeListContains(ArrayList<Node> list, int target) {
+        for (Node nextNode : list) {
+            if (nextNode.node_id == target) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** TODO
@@ -42,6 +84,33 @@ public class BipartiteMatching {
     */
     boolean dfs(int v)
     {
+        if (used[v]) {
+            return false;
+        }
+        used[v] = true;
+        ArrayList<Node> adjacencyList = adj_list.get(v + 1);
+        for (Node u : adjacencyList) {
+            if (match[u.node_id] == -1) {
+                // an augmented path is found,
+                // update Match and return true
+                match[u.node_id] = v;
+                match[v] = u.node_id;
+                return true;
+            }
+            else { // there is a match
+                // w is u's match
+                // w is the node matched with u
+                int w = match[u.node_id];
+                if (!used[w]) {
+                    if (dfs(w)) {
+                        // an augmented path is found
+                        match[w] = u.node_id; //todo: is this the right match?
+                        match[u.node_id] = w;
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -55,14 +124,28 @@ public class BipartiteMatching {
     */
     int bipartiteMatching()
     {
-        return 0;
+        int res = 0;
+        for (int i = 0; i < M; i++) {
+            // Initialize used array to false
+            for (int j = 0; j < this.used.length; j++) {
+                this.used[j] = false;
+            }
+            if (match[i] == -1) {
+                if (dfs(i)) {
+                    res++;
+                }
+            }
+
+        }
+
+        return res;
     }
 
     public static void main(String []args)
     {
         try {
             BipartiteMatching model = new BipartiteMatching(0, 0);
-            File myObj = new File("./src/com/cs251/sampleBipartiteData.txt");
+            File myObj = new File("./src/sampleBipartiteData.txt");
             Scanner myReader = new Scanner(myObj);
             int line = 0;
             while (myReader.hasNextLine()) {

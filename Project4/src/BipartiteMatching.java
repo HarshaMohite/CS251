@@ -41,6 +41,7 @@ public class BipartiteMatching {
         initializeArrayList(uOffsetIndex);
         for (int connectedNode : node_list) {
             // Add into ArrayList at key u
+            connectedNode = connectedNode - 1;
             Node nextNode = new Node(connectedNode);
             if (!nodeListContains(adj_list.get(uOffsetIndex), connectedNode)) {
                 adj_list.get(uOffsetIndex).add(nextNode);
@@ -88,7 +89,7 @@ public class BipartiteMatching {
             return false;
         }
         used[v] = true;
-        ArrayList<Node> adjacencyList = adj_list.get(v + 1);
+        ArrayList<Node> adjacencyList = adj_list.get(v);
         for (Node u : adjacencyList) {
             if (match[u.node_id] == -1) {
                 // an augmented path is found,
@@ -104,8 +105,8 @@ public class BipartiteMatching {
                 if (!used[w]) {
                     if (dfs(w)) {
                         // an augmented path is found
-                        match[w] = u.node_id; //todo: is this the right match?
-                        match[u.node_id] = w;
+                        match[u.node_id] = v;
+                        match[v] = u.node_id;
                         return true;
                     }
                 }
